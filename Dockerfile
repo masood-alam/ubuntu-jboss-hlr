@@ -38,9 +38,12 @@ apt-get update
 
 RUN apt-get install -y openjdk-7-jdk
 
+RUN apt-get install -y unzip
+#ADD jboss-5.1.0.GA-networkside.tar.gz /opt
+ADD jboss-5.1.0.GA-nw.zip /opt
+RUN unzip /opt/jboss-5.1.0.GA-nw.zip -d /opt && rm /opt/jboss-5.1.0.GA-nw.zip
+ADD data/*.xml /opt/jboss-5.1.0.GA/server/default/data/
+ADD ms-initiated-ussdrequest-docker18.war /opt/jboss-5.1.0.GA/server/default/deploy/ms-initiated-ussdrequest.war
 
-ADD jboss-5.1.0.GA-networkside.tar.gz /opt
-ADD ms-initiated-ussdrequest-docker18.war /opt/jboss-5.1.0.GA-networkside/server/default/deploy/ms-initiated-ussdrequest.war
-
-CMD ["/opt/jboss-5.1.0.GA-networkside/bin/run.sh", "-b","0.0.0.0"]
+CMD ["/opt/jboss-5.1.0.GA/bin/run.sh", "-b","0.0.0.0"]
 
